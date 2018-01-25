@@ -25,6 +25,8 @@ android {
 }
 
 dependencies {
+    implementation project(':domain')
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.android.support:appcompat-v7:26.1.0'
@@ -35,5 +37,4 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     // Enabling multiDex support to avoid 64k method limit
     implementation 'com.android.support:multidex:1.0.0'
-    implementation project(':domain')
 }
