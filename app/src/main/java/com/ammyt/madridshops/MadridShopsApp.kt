@@ -2,9 +2,7 @@ package com.ammyt.madridshops
 
 import android.support.multidex.MultiDexApplication
 import android.util.Log
-import com.ammyt.domain.interactor.ErrorCompletion
-import com.ammyt.domain.interactor.GetAllShopsFakeImplementation
-import com.ammyt.domain.interactor.SuccessCompletion
+import com.ammyt.domain.interactor.getallshops.GetAllShopsFakeImpl
 import com.ammyt.domain.model.Shops
 
 class MadridShopsApp: MultiDexApplication() {
@@ -15,18 +13,14 @@ class MadridShopsApp: MultiDexApplication() {
         // init code app wide
         Log.d("App", "onCreate")
 
-        val allShopsInteractor = GetAllShopsFakeImplementation()
-        allShopsInteractor.execute(success = object: SuccessCompletion<Shops> {
-            override fun successCompletion(shops: Shops) {
+        val allShopsInteractor = GetAllShopsFakeImpl()
 
-            }
+        allShopsInteractor.execute(success = { shops: Shops ->
 
-        }, error = object: ErrorCompletion {
-            override fun errorCompletion(errorMessage: String) {
-
-            }
+        }, error = {msg: String ->
 
         })
+
     }
 
     override fun onLowMemory() {

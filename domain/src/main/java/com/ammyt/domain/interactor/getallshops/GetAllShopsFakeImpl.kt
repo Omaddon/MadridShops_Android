@@ -1,9 +1,13 @@
-package com.ammyt.domain.interactor
+package com.ammyt.domain.interactor.getallshops
 
+import com.ammyt.domain.interactor.ErrorClosure
+import com.ammyt.domain.interactor.ErrorCompletion
+import com.ammyt.domain.interactor.SuccessClosure
+import com.ammyt.domain.interactor.SuccessCompletion
 import com.ammyt.domain.model.Shop
 import com.ammyt.domain.model.Shops
 
-class GetAllShopsFakeImplementation: GetAllShopsInteractor {
+class GetAllShopsFakeImpl : GetAllShopsInteractor {
     override fun execute(success: SuccessCompletion<Shops>, error: ErrorCompletion) {
         var allOk = true
 
@@ -18,7 +22,7 @@ class GetAllShopsFakeImplementation: GetAllShopsInteractor {
         }
     }
 
-    fun execute(success: (shops: Shops) -> Unit, error: (msg: String) -> Unit ) {
+    fun execute(success: SuccessClosure, error: ErrorClosure) {
         var allOk = true
 
         // connect to the repository
