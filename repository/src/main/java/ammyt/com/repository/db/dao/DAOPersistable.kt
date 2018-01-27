@@ -4,16 +4,17 @@ import android.database.Cursor
 
 // DAO = Data Access Object
 interface DAOReadOperations<T> {
-    fun query(id: Int): T
+    fun query(id: Long): T
     fun query(): List<T>
-    fun queryCursor(): Cursor
+    fun queryCursor(id: Long): Cursor
 }
 
 interface DAOWriteOperations<T> {
-    fun insert()
-    fun update()
-    fun delete()
-    fun deleteAll()
+    fun insert(element: T): Long
+    fun update(id: Long, element: T): Long
+    fun delete(element: T): Long
+    fun delete(id: Long): Long
+    fun deleteAll(): Boolean
 }
 
 interface DAOPersistable<T>: DAOReadOperations<T>, DAOWriteOperations<T>
