@@ -17,7 +17,7 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         val cursor = queryCursor(id)
 
         // DOS Cursores extra: 'BEFORE_FIRST' y 'AFTER_LAST'. El cursor comienza en 'BEFORE_FIRST'.
-        // Con moveToNext() se mueve al siguiente y lee. Si llega a 'AFTER_LAST' para.
+        // Con moveToNext() se mueve al siguiente y lee. Si llega a 'AFTER_LAST' para de leer.
         cursor.moveToFirst()
 
         // Podríamos hacer una extensión de Cursor para poder hacer esto: cursor.readString
