@@ -20,7 +20,6 @@ class MadridShopsApp: MultiDexApplication() {
         }, error = {msg: String ->
 
         })
-
     }
 
     override fun onLowMemory() {

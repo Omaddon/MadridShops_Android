@@ -1,8 +1,8 @@
-package ammyt.com.repository.db.dao
+package com.ammyt.madridshops.repository.db.dao
 
-import ammyt.com.repository.db.DBConstants
-import ammyt.com.repository.db.DBHelper
-import ammyt.com.repository.model.ShopEntity
+import com.ammyt.madridshops.repository.db.DBConstants
+import com.ammyt.madridshops.repository.db.DBHelper
+import com.ammyt.madridshops.repository.model.ShopEntity
 import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -21,9 +21,36 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         cursor.moveToFirst()
 
         // Podríamos hacer una extensión de Cursor para poder hacer esto: cursor.readString
+        return entityFromCursor(cursor)!!
+    }
+
+    override fun query(): List<ShopEntity> {
+        val queryResult = ArrayList<ShopEntity>()
+
+        // SELECT * FROM TABLE_SHOP
+        val cursor = dbReadOnlyConnection.query(
+                DBConstants.TABLE_SHOP,
+                DBConstants.ALL_COLUMNS,
+                null,
+                null,
+                "",
+                "",
+                DBConstants.KEY_SHOP_DATABASE_ID)
+
+        while (cursor.moveToNext()) {
+            val shopEntity = entityFromCursor(cursor)
+            queryResult.add(shopEntity!!)
+        }
+
+        return queryResult
+    }
+
+    fun entityFromCursor(cursor: Cursor): ShopEntity? {
+        if (cursor.isAfterLast || cursor.isBeforeFirst) return null
+
         return ShopEntity(
-                1,
-                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID)),
+                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID_JSON)),
+                cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_DATABASE_ID)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_NAME)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION)),
                 cursor.getFloat(cursor.getColumnIndex(DBConstants.KEY_SHOP_LATITUDE)),
@@ -35,20 +62,15 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         )
     }
 
-    override fun query(): List<ShopEntity> {
-        // TODO queryList
-        return ArrayList()
-    }
-
     override fun queryCursor(id: Long): Cursor {
         val cursor = dbReadOnlyConnection.query(
                 DBConstants.TABLE_SHOP,
                 DBConstants.ALL_COLUMNS,
-                DBConstants.KEY_SHOP_ID + " = ?",
+                DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
                 arrayOf(id.toString()),
                 "",
                 "",
-                DBConstants.KEY_SHOP_ID)
+                DBConstants.KEY_SHOP_DATABASE_ID)
 
         return cursor
     }
@@ -66,7 +88,8 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
     fun contentValues(shopEntity: ShopEntity): ContentValues {
         val content = ContentValues()
 
-        content.put(DBConstants.KEY_SHOP_ID, shopEntity.id)
+        // El id de la database lo genera solo si no se lo indicamos
+        content.put(DBConstants.KEY_SHOP_ID_JSON, shopEntity.id)
         content.put(DBConstants.KEY_SHOP_NAME, shopEntity.name)
 
         // Optionals
@@ -82,28 +105,37 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
     }
 
     override fun update(id: Long, element: ShopEntity): Long {
-        // TODO update
-        return 1
+        // Devuelve el número de registros actualizados
+        return dbReadWriteConnection.update(
+                DBConstants.TABLE_SHOP,
+                contentValues(element),
+                DBConstants.KEY_SHOP_DATABASE_ID + " = ? ",
+                arrayOf(id.toString())
+        ).toLong()
     }
 
     override fun delete(element: ShopEntity): Long {
-        return delete(element.id)
+        if (element.databaseId < 1) return 0
+
+        return delete(element.databaseId)
     }
 
     override fun delete(id: Long): Long {
-
         // Con '?' se evita la inyección de código, pues el ? se resuelve mirando el array
+        // Devuelve el número de registros borrados
         return dbReadWriteConnection.delete(
                 DBConstants.TABLE_SHOP,
-                DBConstants.KEY_SHOP_ID + " = ?",
+                DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
                 arrayOf(id.toString())
                 ).toLong()
     }
 
     override fun deleteAll(): Boolean {
-        // TODO deleteAll
-        return true
+        return dbReadWriteConnection.delete(
+                DBConstants.TABLE_SHOP,
+                null,
+                null
+        ).toLong() > 0
     }
-
 
 }

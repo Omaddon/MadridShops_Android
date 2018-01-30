@@ -1,4 +1,4 @@
-package ammyt.com.repository.db.dao
+package com.ammyt.madridshops.repository.db.dao
 
 import android.database.Cursor
 

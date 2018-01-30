@@ -1,4 +1,4 @@
-package ammyt.com.repository.model
+package com.ammyt.madridshops.repository.model
 
 data class ShopEntity (
     val id: Long,

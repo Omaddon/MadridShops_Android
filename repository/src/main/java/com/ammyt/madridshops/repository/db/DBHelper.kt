@@ -1,4 +1,4 @@
-package ammyt.com.repository.db
+package com.ammyt.madridshops.repository.db
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase

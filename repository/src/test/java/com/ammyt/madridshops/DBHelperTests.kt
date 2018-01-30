@@ -1,8 +1,8 @@
-package ammyt.com.repository
+package com.ammyt.madridshops
 
 import org.junit.Test
 
-import ammyt.com.repository.db.convert
+import com.ammyt.madridshops.repository.db.convert
 import org.junit.Assert.*
 
 class DBHelperTests {
