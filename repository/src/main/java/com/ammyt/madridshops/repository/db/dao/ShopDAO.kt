@@ -93,13 +93,13 @@ class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         content.put(DBConstants.KEY_SHOP_NAME, shopEntity.name)
 
         // Optionals
-        content.put(DBConstants.KEY_SHOP_DESCRIPTION, shopEntity.description)
-        content.put(DBConstants.KEY_SHOP_LATITUDE, shopEntity.latitude)
-        content.put(DBConstants.KEY_SHOP_LONGITUDE, shopEntity.longitude)
-        content.put(DBConstants.KEY_SHOP_IMAGE_URL, shopEntity.image)
-        content.put(DBConstants.KEY_SHOP_LOGO_IMAGE_URL, shopEntity.logo)
+        content.put(DBConstants.KEY_SHOP_DESCRIPTION, shopEntity.description_en)
+        content.put(DBConstants.KEY_SHOP_LATITUDE, shopEntity.gps_lat)
+        content.put(DBConstants.KEY_SHOP_LONGITUDE, shopEntity.gps_lon)
+        content.put(DBConstants.KEY_SHOP_IMAGE_URL, shopEntity.img)
+        content.put(DBConstants.KEY_SHOP_LOGO_IMAGE_URL, shopEntity.logo_img)
         content.put(DBConstants.KEY_SHOP_ADDRESS, shopEntity.address)
-        content.put(DBConstants.KEY_SHOP_OPENING_HOURS, shopEntity.openingHours)
+        content.put(DBConstants.KEY_SHOP_OPENING_HOURS, shopEntity.opening_hours_es)
 
         return content
     }

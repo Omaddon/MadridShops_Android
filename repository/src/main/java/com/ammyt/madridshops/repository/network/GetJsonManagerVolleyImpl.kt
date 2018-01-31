@@ -1,12 +1,44 @@
 package com.ammyt.madridshops.repository.network
 
-class GetJsonManagerVolleyImpl: GetJsonManager {
+import android.content.Context
+import android.util.Log
+import com.ammyt.madridshops.repository.ErrorCompletion
+import com.ammyt.madridshops.repository.SuccessCompletion
+import com.android.volley.RequestQueue
+import com.android.volley.Response
+import com.android.volley.toolbox.StringRequest
+import com.android.volley.toolbox.Volley
+import java.lang.ref.WeakReference
 
-    override fun execute(url: String) {
-        // Get request queue
+class GetJsonManagerVolleyImpl(context: Context): GetJsonManager {
+
+    // WeakReference para evitar memory leak y referencias cíclicas
+    // Activity -> Interactor -> Repository -> Volley -/> Activity
+    var weakContext: WeakReference<Context> = WeakReference(context)
+    var requestQueue: RequestQueue? = null
+
+    override fun execute(url: String,
+                         success: SuccessCompletion<String>,
+                         error: ErrorCompletion) {
+        // Get request queue: requestQueue()
 
         // Create request (success, failure)
+        val request = StringRequest(url, Response.Listener {
+            // it = JSON de la URL
+            success.successCompletion(it)
+        }, Response.ErrorListener {
+            error.errorCompletion(it.localizedMessage)
+        })
 
         // Add request to queue
+        requestQueue().add(request)
+    }
+
+    fun requestQueue(): RequestQueue {
+        if (requestQueue == null) {
+            requestQueue = Volley.newRequestQueue(weakContext.get())
+        }
+
+        return requestQueue!!
     }
 }
