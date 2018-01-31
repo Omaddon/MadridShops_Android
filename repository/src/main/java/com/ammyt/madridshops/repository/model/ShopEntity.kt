@@ -1,5 +1,8 @@
 package com.ammyt.madridshops.repository.model
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 data class ShopEntity (
         val id: Long,
         val databaseId: Long,
