@@ -135,7 +135,7 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
                 DBConstants.TABLE_SHOP,
                 null,
                 null
-        ).toLong() > 0
+        ).toLong() >= 0 // >= 0 para comprobar el caso en el que la db esté vacía
     }
 
 }

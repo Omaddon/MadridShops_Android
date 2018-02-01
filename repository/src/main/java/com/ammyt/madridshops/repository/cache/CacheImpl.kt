@@ -7,7 +7,7 @@ import com.ammyt.madridshops.repository.db.dao.ShopDAO
 import com.ammyt.madridshops.repository.thread.DispatchOnMainThread
 import java.lang.ref.WeakReference
 
-class CacheImpl(context: Context): Cache {
+internal class CacheImpl(context: Context): Cache {
     private val weakContext = WeakReference<Context>(context)
 
     override fun deleteAllShops(success: () -> Unit, error: (errorMessage: String) -> Unit) {

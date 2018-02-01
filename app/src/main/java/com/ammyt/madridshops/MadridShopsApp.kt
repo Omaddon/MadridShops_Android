@@ -2,6 +2,7 @@ package com.ammyt.madridshops
 
 import android.support.multidex.MultiDexApplication
 import android.util.Log
+import com.ammyt.domain.interactor.deleteallshops.DeleteAllShopsImpl
 import com.ammyt.domain.interactor.getallshops.GetAllShopsFakeImpl
 import com.ammyt.domain.model.Shops
 
@@ -19,6 +20,12 @@ class MadridShopsApp: MultiDexApplication() {
 
         }, error = {msg: String ->
 
+        })
+
+        DeleteAllShopsImpl(this).execute(success = {
+            Log.d("Success", "❗️Success")
+        }, error = {
+            Log.d("Error", "❗️Error: " + it)
         })
     }
 

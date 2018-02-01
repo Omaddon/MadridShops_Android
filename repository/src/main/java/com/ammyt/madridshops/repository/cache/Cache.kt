@@ -1,5 +1,5 @@
 package com.ammyt.madridshops.repository.cache
 
-interface Cache {
+internal interface Cache {
     fun deleteAllShops(success: () -> Unit, error: (errorMessage: String) -> Unit)
 }
