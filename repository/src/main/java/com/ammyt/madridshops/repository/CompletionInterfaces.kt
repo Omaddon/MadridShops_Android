@@ -1,9 +1,9 @@
 package com.ammyt.madridshops.repository
 
-interface SuccessCompletion<T> {
+internal interface SuccessCompletion<T> {
     fun successCompletion(e: T)
 }
 
-interface ErrorCompletion {
+internal interface ErrorCompletion {
     fun errorCompletion(errorMessage: String)
 }

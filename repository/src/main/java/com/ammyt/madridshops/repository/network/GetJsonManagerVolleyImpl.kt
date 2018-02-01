@@ -1,7 +1,6 @@
 package com.ammyt.madridshops.repository.network
 
 import android.content.Context
-import android.util.Log
 import com.ammyt.madridshops.repository.ErrorCompletion
 import com.ammyt.madridshops.repository.SuccessCompletion
 import com.android.volley.RequestQueue
@@ -10,7 +9,7 @@ import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import java.lang.ref.WeakReference
 
-class GetJsonManagerVolleyImpl(context: Context): GetJsonManager {
+internal class GetJsonManagerVolleyImpl(context: Context): GetJsonManager {
 
     // WeakReference para evitar memory leak y referencias cíclicas
     // Activity -> Interactor -> Repository -> Volley -/> Activity

@@ -14,7 +14,7 @@ import org.junit.Assert.*
 
 
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class ShopDAOTests {
     // Context of the app under test.
     val appContext = InstrumentationRegistry.getTargetContext()
     val dbHelper = buildDBHelper(appContext, "mydb.sqlite", 1)

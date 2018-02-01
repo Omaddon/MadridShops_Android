@@ -1,6 +1,6 @@
 package com.ammyt.madridshops.repository.db
 
-object DBConstants {
+internal object DBConstants {
     val TABLE_SHOP = "SHOP"
 
     // Table field constants
