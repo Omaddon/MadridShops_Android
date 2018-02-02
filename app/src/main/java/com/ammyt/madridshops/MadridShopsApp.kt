@@ -2,8 +2,9 @@ package com.ammyt.madridshops
 
 import android.support.multidex.MultiDexApplication
 import android.util.Log
-import com.ammyt.domain.interactor.deleteallshops.DeleteAllShopsImpl
-import com.ammyt.domain.interactor.getallshops.GetAllShopsFakeImpl
+import com.ammyt.domain.interactor.ErrorCompletion
+import com.ammyt.domain.interactor.SuccessCompletion
+import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractorImpl
 import com.ammyt.domain.model.Shops
 
 class MadridShopsApp: MultiDexApplication() {
@@ -14,19 +15,31 @@ class MadridShopsApp: MultiDexApplication() {
         // init code app wide
         Log.d("App", "onCreate")
 
-        val allShopsInteractor = GetAllShopsFakeImpl()
+        Log.d("App", BuildConfig.MADRIDSHOPS_SERVER_URL)
 
-        allShopsInteractor.execute(success = { shops: Shops ->
+        val allShopsInteractor = GetAllShopsInteractorImpl(this)
 
-        }, error = {msg: String ->
+        allShopsInteractor.execute(object: SuccessCompletion<Shops> {
+            override fun successCompletion(e: Shops) {
+                Log.d("Shops", "❗️Count: " + e.count())
+
+                e.shops.forEach { Log.d("Shop", it.name) }
+            }
+
+        }, object: ErrorCompletion {
+            override fun errorCompletion(errorMessage: String) {
+                Log.d("Shops", errorMessage)
+            }
 
         })
 
+        /*
         DeleteAllShopsImpl(this).execute(success = {
             Log.d("Success", "❗️Success")
         }, error = {
             Log.d("Error", "❗️Error: " + it)
         })
+        */
     }
 
     override fun onLowMemory() {
