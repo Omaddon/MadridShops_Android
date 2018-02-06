@@ -42,4 +42,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     // Enabling multiDex support to avoid 64k method limit
     implementation 'com.android.support:multidex:1.0.0'
+
+    implementation "com.google.android.gms:play-services-maps:11.8.0"
 }
