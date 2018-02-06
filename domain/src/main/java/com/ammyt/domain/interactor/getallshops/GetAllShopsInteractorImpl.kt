@@ -26,6 +26,7 @@ class GetAllShopsInteractorImpl(context: Context) : GetAllShopsInteractor {
     private fun entityMapper(list: List<ShopEntity>): Shops {
         val shopsList = ArrayList<Shop>()
 
+        // TODO mapear el resto de campos (meter en función)
         list.forEach {
             val shop = Shop(it.id.toInt(), it.name, it.address)
             shopsList.add(shop)

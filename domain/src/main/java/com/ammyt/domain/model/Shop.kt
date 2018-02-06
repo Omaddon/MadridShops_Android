@@ -3,6 +3,7 @@ package com.ammyt.domain.model
 /**
  * Shop: represents one Shop
  */
+// TODO crear el resto de campos del modelo
 data class Shop(val id: Int, val name: String, val address: String) {
     init {
         Shops(ArrayList<Shop>())
