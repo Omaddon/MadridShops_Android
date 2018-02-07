@@ -22,7 +22,7 @@ class JSONParsingTests {
 
         assertNotNull(shop)
         assertEquals("Cortefiel - Preciados", shop.name)
-        assertEquals(40.4180563f, shop.latitude, 0.1f)
+        assertEquals(40.4180563, shop.latitude.toDouble(), 0.1)
     }
 
     @Test
@@ -38,7 +38,7 @@ class JSONParsingTests {
         assertNotNull(responseEntity)
         assertEquals(6, responseEntity.result.count())
         assertEquals("Cortefiel - Preciados", responseEntity.result[0].name)
-        assertEquals(40.4180563f, responseEntity.result[0].latitude, 0.1f)
+        assertEquals(40.4180563, responseEntity.result[0].latitude.toDouble(), 0.1)
     }
 
     @Test
@@ -54,11 +54,11 @@ class JSONParsingTests {
         try {
             shop = parser.parse<ShopEntity>(shopJson)
         } catch (e: InvalidFormatException) {
-            shop = ShopEntity(1,1,"Parsing failed","",10f, 11f, "", "", "", "")
+            shop = ShopEntity(1,1,"Parsing failed","","10", "11", "", "", "", "")
         }
 
         assertNotNull(shop)
         assertEquals("Parsing failed", shop.name)
-        assertEquals(10f, shop.latitude, 0.1f)
+        assertEquals(10.0, shop.latitude.toDouble(), 0.1)
     }
 }
