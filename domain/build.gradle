@@ -17,6 +17,10 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "MADRIDSHOPS_SERVER_URL", "\"http://madrid-shops.com/json_new/getShops.php\""
+            buildConfigField "String", "MADRIDACTIVITIES_SERVER_URL", "\"http://madrid-shops.com/json_new/getActivities.php\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'

@@ -19,19 +19,35 @@ class GetAllShopsInteractorImpl(context: Context) : GetAllShopsInteractor {
             val shops: Shops = entityMapper(it)
             success.successCompletion(shops)
         }, error = {
-            error(it)
+            error.errorCompletion(it)
         })
     }
 
     private fun entityMapper(list: List<ShopEntity>): Shops {
         val shopsList = ArrayList<Shop>()
 
-        // TODO mapear el resto de campos (meter en función)
         list.forEach {
-            val shop = Shop(it.id.toInt(), it.name, it.address)
-            shopsList.add(shop)
+            shopsList.add(mapShopEntityToShop(it))
         }
 
         return Shops(shopsList)
+    }
+
+    private fun mapShopEntityToShop(shopEntity: ShopEntity): Shop {
+        return Shop(
+                shopEntity.id.toInt(),
+                shopEntity.name,
+                shopEntity.description_en,
+                shopEntity.description_es,
+                shopEntity.latitude.toFloat(),
+                shopEntity.longitude.toFloat(),
+                shopEntity.img,
+                shopEntity.logo,
+                shopEntity.openingHours_en,
+                shopEntity.openingHours_es,
+                shopEntity.address,
+                shopEntity.telephone,
+                shopEntity.url
+        )
     }
 }

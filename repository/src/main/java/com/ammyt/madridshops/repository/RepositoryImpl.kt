@@ -61,7 +61,7 @@ class RepositoryImpl(context: Context): Repository {
 
                 }, errorCompletion = object: ErrorCompletion {
             override fun errorCompletion(errorMessage: String) {
-                // TODO tratamiento del error al parsear
+                // TODO tratamiento del error al parsear una Shop
             }
 
         })
