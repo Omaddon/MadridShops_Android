@@ -7,6 +7,7 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
+// TODO ActivitiesDAO
 internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
 
     private val dbReadOnlyConnection: SQLiteDatabase = dbHelper.readableDatabase
@@ -30,7 +31,7 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         // SELECT * FROM TABLE_SHOP
         val cursor = dbReadOnlyConnection.query(
                 DBConstants.TABLE_SHOP,
-                DBConstants.ALL_COLUMNS,
+                DBConstants.ALL_COLUMNS_SHOP,
                 null,
                 null,
                 "",
@@ -45,27 +46,31 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         return queryResult
     }
 
-    fun entityFromCursor(cursor: Cursor): ShopEntity? {
+    private fun entityFromCursor(cursor: Cursor): ShopEntity? {
         if (cursor.isAfterLast || cursor.isBeforeFirst) return null
 
         return ShopEntity(
                 cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_ID_JSON)),
                 cursor.getLong(cursor.getColumnIndex(DBConstants.KEY_SHOP_DATABASE_ID)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_NAME)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION_EN)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_DESCRIPTION_ES)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_LATITUDE)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_LONGITUDE)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_IMAGE_URL)),
                 cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_LOGO_IMAGE_URL)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS)),
-                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_ADDRESS))
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS_EN)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_OPENING_HOURS_ES)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_ADDRESS)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_TELEPHONE)),
+                cursor.getString(cursor.getColumnIndex(DBConstants.KEY_SHOP_URL))
         )
     }
 
     override fun queryCursor(id: Long): Cursor {
         val cursor = dbReadOnlyConnection.query(
                 DBConstants.TABLE_SHOP,
-                DBConstants.ALL_COLUMNS,
+                DBConstants.ALL_COLUMNS_SHOP,
                 DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
                 arrayOf(id.toString()),
                 "",
@@ -78,14 +83,14 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
     override fun insert(element: ShopEntity): Long {
         var id: Long = -1
 
-        // Deberíamos verificar si los datos de entrada son correctos, qué resultado (id)
-        // nos devuelve la operación, etc
+        // Deberíamos verificar si los datos de entrada son correctos, es decir
+        // qué resultado (id) nos devuelve la operación, etc
         id = dbReadWriteConnection.insert(DBConstants.TABLE_SHOP, null, contentValues(element))
 
         return id
     }
 
-    fun contentValues(shopEntity: ShopEntity): ContentValues {
+    private fun contentValues(shopEntity: ShopEntity): ContentValues {
         val content = ContentValues()
 
         // El id de la database lo genera solo si no se lo indicamos
@@ -93,13 +98,17 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         content.put(DBConstants.KEY_SHOP_NAME, shopEntity.name)
 
         // Optionals
-        content.put(DBConstants.KEY_SHOP_DESCRIPTION, shopEntity.description)
+        content.put(DBConstants.KEY_SHOP_DESCRIPTION_EN, shopEntity.description_en)
+        content.put(DBConstants.KEY_SHOP_DESCRIPTION_ES, shopEntity.description_es)
         content.put(DBConstants.KEY_SHOP_LATITUDE, shopEntity.latitude)
         content.put(DBConstants.KEY_SHOP_LONGITUDE, shopEntity.longitude)
         content.put(DBConstants.KEY_SHOP_IMAGE_URL, shopEntity.img)
         content.put(DBConstants.KEY_SHOP_LOGO_IMAGE_URL, shopEntity.logo)
         content.put(DBConstants.KEY_SHOP_ADDRESS, shopEntity.address)
-        content.put(DBConstants.KEY_SHOP_OPENING_HOURS, shopEntity.openingHours)
+        content.put(DBConstants.KEY_SHOP_OPENING_HOURS_EN, shopEntity.openingHours_en)
+        content.put(DBConstants.KEY_SHOP_OPENING_HOURS_ES, shopEntity.openingHours_es)
+        content.put(DBConstants.KEY_SHOP_TELEPHONE, shopEntity.telephone)
+        content.put(DBConstants.KEY_SHOP_URL, shopEntity.url)
 
         return content
     }

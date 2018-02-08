@@ -42,7 +42,6 @@ internal class CacheImpl(context: Context): Cache {
     }
 
     override fun deleteAllShops(success: () -> Unit, error: (errorMessage: String) -> Unit) {
-        // Como puede tardar un tiempo, lo hacemos en segundo plano
         Thread(Runnable {
             val successDeleting = ShopDAO(cacheDBHelper()).deleteAll()
 
@@ -57,6 +56,7 @@ internal class CacheImpl(context: Context): Cache {
     }
 
     private fun cacheDBHelper(): DBHelper {
+        // TODO quizá cambiar "version" por una constante en el build.gradle o una variable global
         return buildDBHelper(weakContext.get()!!, "MadridShops.sqlite", 1)
     }
 }

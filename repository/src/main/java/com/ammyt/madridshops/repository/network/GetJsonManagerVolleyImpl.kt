@@ -11,7 +11,7 @@ import java.lang.ref.WeakReference
 
 internal class GetJsonManagerVolleyImpl(context: Context): GetJsonManager {
 
-    // WeakReference para evitar memory leak y referencias cíclicas
+    // WeakReference to avoid memory leak and cycle references
     // Activity -> Interactor -> Repository -> Volley -/> Activity
     var weakContext: WeakReference<Context> = WeakReference(context)
     var requestQueue: RequestQueue? = null
@@ -33,7 +33,7 @@ internal class GetJsonManagerVolleyImpl(context: Context): GetJsonManager {
         requestQueue().add(request)
     }
 
-    fun requestQueue(): RequestQueue {
+    private fun requestQueue(): RequestQueue {
         if (requestQueue == null) {
             requestQueue = Volley.newRequestQueue(weakContext.get())
         }

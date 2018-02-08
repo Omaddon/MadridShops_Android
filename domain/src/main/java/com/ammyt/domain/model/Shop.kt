@@ -3,8 +3,23 @@ package com.ammyt.domain.model
 /**
  * Shop: represents one Shop
  */
-// TODO crear el resto de campos del modelo
-data class Shop(val id: Int, val name: String, val address: String) {
+
+// TODO crear el modelo de Activities
+data class Shop(
+        val id: Int,
+        val name: String,
+        val description_en: String,
+        val description_es: String,
+        val latitude: Float,
+        val longitude: Float,
+        val imageURL: String,
+        val logoURL: String,
+        val openingHours_en: String,
+        val openingHours_es: String,
+        val address: String,
+        val telephone: String,
+        val url: String) {
+
     init {
         Shops(ArrayList<Shop>())
     }
@@ -12,7 +27,7 @@ data class Shop(val id: Int, val name: String, val address: String) {
 
 class Shops(val shops: MutableList<Shop>): Aggregate<Shop> {
     override fun count(): Int {
-        return  shops.size
+        return shops.size
     }
 
     override fun all(): List<Shop> {

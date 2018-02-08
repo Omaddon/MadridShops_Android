@@ -26,21 +26,23 @@ class RepositoryImpl(context: Context): Repository {
             success(it)
         }, error = {
             // If not shops in cache -> network + Cache
-            populateCache(success, error)
+            populateShopCache(success, error)
         })
     }
 
-    private fun populateCache(success: (shops: List<ShopEntity>) -> Unit,
-                              error: (errorMessage: String) -> Unit) {
+    // TODO populate cache for Activities
+    private fun populateShopCache(success: (shops: List<ShopEntity>) -> Unit,
+                                  error: (errorMessage: String) -> Unit) {
 
         // Perform network request
         val jsonManager: GetJsonManager = GetJsonManagerVolleyImpl(weakContext.get()!!)
         jsonManager.execute(BuildConfig.MADRIDSHOPS_SERVER_URL,
                 successCompletion = object: SuccessCompletion<String>{
                     override fun successCompletion(e: String) {
+                        // e = our JSON
                         // parsing: be care with parse errors!!
                         val parser = JsonEntitiesParser()
-                        var responseEntity: ShopsResponseEntity
+                        val responseEntity: ShopsResponseEntity
 
                         try {
                             responseEntity = parser.parse<ShopsResponseEntity>(e)
@@ -59,7 +61,7 @@ class RepositoryImpl(context: Context): Repository {
 
                 }, errorCompletion = object: ErrorCompletion {
             override fun errorCompletion(errorMessage: String) {
-
+                // TODO tratamiento del error al parsear
             }
 
         })
