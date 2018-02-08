@@ -1,6 +1,7 @@
 package com.ammyt.domain.interactor.getallshops
 
 import android.content.Context
+import android.util.Log
 import com.ammyt.domain.interactor.ErrorCompletion
 import com.ammyt.domain.interactor.SuccessCompletion
 import com.ammyt.domain.model.Shop
@@ -39,8 +40,8 @@ class GetAllShopsInteractorImpl(context: Context) : GetAllShopsInteractor {
                 shopEntity.name,
                 shopEntity.description_en,
                 shopEntity.description_es,
-                shopEntity.latitude.toFloat(),
-                shopEntity.longitude.toFloat(),
+                parseStringToDouble(shopEntity.latitude),
+                parseStringToDouble(shopEntity.longitude),
                 shopEntity.img,
                 shopEntity.logo,
                 shopEntity.openingHours_en,
@@ -49,5 +50,19 @@ class GetAllShopsInteractorImpl(context: Context) : GetAllShopsInteractor {
                 shopEntity.telephone,
                 shopEntity.url
         )
+    }
+
+    private fun parseStringToDouble(value: String): Double? {
+        var coordinate: Double? = null
+
+        val parsedString: String = value.replace(",", "").replace(" ", "")
+
+        try {
+            coordinate = parsedString.toDouble()
+        } catch (e: Exception) {
+            Log.d("PARSE ERROR", "💩 Error parsing to float: " + value)
+        }
+
+        return coordinate
     }
 }

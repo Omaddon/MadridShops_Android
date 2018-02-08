@@ -27,7 +27,8 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+// TODO ActivitiesActivity
+class ShopActivity : AppCompatActivity() {
 
     private var listFragment: ListFragment? = null
     private var map: GoogleMap? = null
@@ -37,8 +38,6 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        Log.d("App", "onCreate MainActivity")
-
         setupMap()
 
         listFragment = supportFragmentManager.findFragmentById(R.id.activity_main_list_fragment) as ListFragment
@@ -46,9 +45,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupMap() {
-        var getAllShopsInteractor: GetAllShopsInteractor = GetAllShopsInteractorImpl(this)
+        val getAllShopsInteractor: GetAllShopsInteractor = GetAllShopsInteractorImpl(this)
         getAllShopsInteractor.execute(object: SuccessCompletion<Shops> {
             override fun successCompletion(shops: Shops) {
+                Log.d("Shops", "❗️Count: " + shops.count())
+                //shops.shops.forEach { Log.d("Shop", it.name) }
+
                 initializeMap(shops)
             }
 
@@ -63,8 +65,11 @@ class MainActivity : AppCompatActivity() {
     private fun initializeMap(shops: Shops) {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.activity_main_map_fragment) as SupportMapFragment
         mapFragment.getMapAsync({
-            Log.d("SUCCESS", "HABEMUS MAPA")
-            centerMapInPosition(it, 40.416775, -3.703790)
+            Log.d("SUCCESS", "ShopMap loaded!")
+
+            // Madrid center Loc -> lat: 40.416775 | long: -3.703790
+            // Better coords to center maps below
+            centerMapInPosition(it, 40.4237353, -3.691626)
             it.uiSettings.isRotateGesturesEnabled = false
             it.uiSettings.isZoomControlsEnabled = true
             showUserPosition(baseContext, it)
@@ -74,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun centerMapInPosition(map: GoogleMap, latitude: Double, longitude: Double) {
+    private fun centerMapInPosition(map: GoogleMap, latitude: Double, longitude: Double) {
         val coordinate = LatLng(latitude, longitude)
         val cameraPosition = CameraPosition.Builder()
                 .target(coordinate)
@@ -84,7 +89,7 @@ class MainActivity : AppCompatActivity() {
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition))
     }
 
-    fun showUserPosition(context: Context, map: GoogleMap) {
+    private fun showUserPosition(context: Context, map: GoogleMap) {
         if (ActivityCompat.checkSelfPermission(context, ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED &&
                 ActivityCompat.checkSelfPermission(context, ACCESS_COARSE_LOCATION)
@@ -96,6 +101,8 @@ class MainActivity : AppCompatActivity() {
                     10)
 
             return
+        } else {
+            map.isMyLocationEnabled = true
         }
     }
 
@@ -111,15 +118,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun addAllPins(shops: Shops) {
+    private fun addAllPins(shops: Shops) {
         for (i in 0 until shops.count()) {
             val shop = shops.get(i)
 
-            appPin(map!!, 40.416775, -3.703790, shop.name)
+            if (shop.latitude != null && shop.longitude != null) {
+                appPin(map!!, shop.latitude!!, shop.longitude!!, shop.name)
+            }
         }
     }
 
-    fun appPin(map: GoogleMap, latitude: Double, longitude: Double, title: String) {
+    private fun appPin(map: GoogleMap, latitude: Double, longitude: Double, title: String) {
         map.addMarker(MarkerOptions()
                 .position(LatLng(latitude,longitude))
                 .title(title))

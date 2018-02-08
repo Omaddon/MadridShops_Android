@@ -43,7 +43,7 @@ internal object DBConstants {
                     + KEY_SHOP_LONGITUDE + " real, "
                     + KEY_SHOP_DESCRIPTION_EN + " text, "
                     + KEY_SHOP_DESCRIPTION_ES + " text, "
-                    + KEY_SHOP_OPENING_HOURS_EN + " text "
+                    + KEY_SHOP_OPENING_HOURS_EN + " text, "
                     + KEY_SHOP_OPENING_HOURS_ES + " text "
                     + ");")
 
