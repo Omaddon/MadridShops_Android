@@ -20,14 +20,14 @@ data class Shop(
         val openingHours_es: String,
         val address: String,
         val telephone: String,
-        val url: String) {
+        val url: String): Serializable {
 
     init {
         Shops(ArrayList<Shop>())
     }
 }
 
-class Shops(val shops: MutableList<Shop>): Aggregate<Shop>, Serializable {
+class Shops(val shops: MutableList<Shop>): Aggregate<Shop> {
     override fun count(): Int {
         return shops.size
     }

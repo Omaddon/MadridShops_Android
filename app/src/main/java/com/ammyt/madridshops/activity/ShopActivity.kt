@@ -22,6 +22,7 @@ import com.ammyt.madridshops.fragment.ShopsListFragment
 import com.ammyt.madridshops.router.Router
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
@@ -31,8 +32,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 // TODO ActivitiesActivity
 class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
-    //private var listFragment: ShopsListFragment? = null
-    //private var shops: Shops? = null
+    private var listFragment: ShopsListFragment? = null
     private var map: GoogleMap? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,15 +49,9 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
         getAllShopsInteractor.execute(object: SuccessCompletion<Shops> {
             override fun successCompletion(shops: Shops) {
                 Log.d("Shops", "❗️Count: " + shops.count())
-                //shops.shops.forEach { Log.d("Shop", it.name) }
 
-                val newListFragment = ShopsListFragment.newInstance(shops)
-                //listFragment = supportFragmentManager.findFragmentById(R.id.activity_main_list_fragment) as ShopsListFragment?
-                //listFragment.setShops(shops)
-
-                fragmentManager.beginTransaction()
-                        .add(R.id.activity_main_list_fragment, newListFragment)
-                        .commit()
+                listFragment = fragmentManager.findFragmentById(R.id.activity_main_list_fragment) as ShopsListFragment?
+                listFragment?.setShops(shops)
 
                 initializeMap(shops)
             }
@@ -166,7 +160,7 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
      */
 
     override fun showShopDetail(shop: Shop) {
-        Log.d("SHOP_DETAIL", "💾 " + shop.name)
-        Router().navigateFromShopActivityToShopDetailActivity(this)
+        Log.d("SHOP_DETAIL", "💾 ShopSelected: " + shop.name)
+        Router().navigateFromShopActivityToShopDetailActivity(this, shop)
     }
 }

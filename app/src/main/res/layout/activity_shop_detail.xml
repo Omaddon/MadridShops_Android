@@ -7,4 +7,10 @@
     android:layout_height="match_parent"
     tools:context="com.ammyt.madridshops.activity.ShopDetailActivity">
 
+    <TextView
+        android:id="@+id/testing_text"
+        android:text="TESTING SHOP DETAIL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
 </android.support.constraint.ConstraintLayout>
