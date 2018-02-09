@@ -1,6 +1,5 @@
 package com.ammyt.madridshops.fragment
 
-
 import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
@@ -80,7 +79,6 @@ class ShopsListFragment : Fragment() {
      * INTERFACES
      */
 
-    // TODO implementar navegación a shopDetail
     interface OnShowShopDetail {
         fun showShopDetail(shop: Shop)
     }

@@ -1,8 +1,8 @@
 package com.ammyt.madridshops.repository.network
 
 import android.content.Context
-import com.ammyt.madridshops.repository.ErrorCompletion
-import com.ammyt.madridshops.repository.SuccessCompletion
+import com.ammyt.madridshops.repository.utils.ErrorCompletion
+import com.ammyt.madridshops.repository.utils.SuccessCompletion
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest

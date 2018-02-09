@@ -1,7 +1,7 @@
 package com.ammyt.madridshops.repository.network
 
-import com.ammyt.madridshops.repository.ErrorCompletion
-import com.ammyt.madridshops.repository.SuccessCompletion
+import com.ammyt.madridshops.repository.utils.ErrorCompletion
+import com.ammyt.madridshops.repository.utils.SuccessCompletion
 
 internal interface GetJsonManager {
     fun execute(url: String,

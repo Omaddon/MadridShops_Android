@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import com.ammyt.domain.interactor.ErrorCompletion
 import com.ammyt.domain.interactor.SuccessCompletion
@@ -22,12 +23,12 @@ import com.ammyt.madridshops.fragment.ShopsListFragment
 import com.ammyt.madridshops.router.Router
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.MapFragment
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.content_main.*
 
 // TODO ActivitiesActivity
 class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
@@ -43,8 +44,9 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
         downloadShops()
     }
 
-    // TODO OJO!! NO ordena las tienda si las bajas de internet la primera vez
     private fun downloadShops() {
+        shop_list_progress_bar.visibility = View.VISIBLE
+
         val getAllShopsInteractor: GetAllShopsInteractor = GetAllShopsInteractorImpl(this)
         getAllShopsInteractor.execute(object: SuccessCompletion<Shops> {
             override fun successCompletion(shops: Shops) {
@@ -54,13 +56,14 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
                 listFragment?.setShops(shops)
 
                 initializeMap(shops)
+                shop_list_progress_bar.visibility = View.INVISIBLE
             }
 
         }, object: ErrorCompletion {
             override fun errorCompletion(errorMessage: String) {
+                shop_list_progress_bar.visibility = View.INVISIBLE
                 Toast.makeText(baseContext, "Error loading.", Toast.LENGTH_SHORT).show()
             }
-
         })
     }
 
@@ -160,7 +163,6 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
      */
 
     override fun showShopDetail(shop: Shop) {
-        Log.d("SHOP_DETAIL", "💾 ShopSelected: " + shop.name)
         Router().navigateFromShopActivityToShopDetailActivity(this, shop)
     }
 }

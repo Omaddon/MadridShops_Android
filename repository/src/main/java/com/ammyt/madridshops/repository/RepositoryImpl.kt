@@ -9,6 +9,8 @@ import com.ammyt.madridshops.repository.model.ShopsResponseEntity
 import com.ammyt.madridshops.repository.network.GetJsonManager
 import com.ammyt.madridshops.repository.network.GetJsonManagerVolleyImpl
 import com.ammyt.madridshops.repository.network.json.JsonEntitiesParser
+import com.ammyt.madridshops.repository.utils.ErrorCompletion
+import com.ammyt.madridshops.repository.utils.SuccessCompletion
 import com.fasterxml.jackson.databind.exc.InvalidFormatException
 import java.lang.ref.WeakReference
 
@@ -37,7 +39,7 @@ class RepositoryImpl(context: Context): Repository {
         // Perform network request
         val jsonManager: GetJsonManager = GetJsonManagerVolleyImpl(weakContext.get()!!)
         jsonManager.execute(BuildConfig.MADRIDSHOPS_SERVER_URL,
-                successCompletion = object: SuccessCompletion<String>{
+                successCompletion = object: SuccessCompletion<String> {
                     override fun successCompletion(e: String) {
                         // e = our JSON
                         // parsing: be care with parse errors!!
@@ -53,7 +55,10 @@ class RepositoryImpl(context: Context): Repository {
 
                         // Store result in cache
                         cache.saveAllShops(responseEntity.result, success = {
-                            success(responseEntity.result)
+                            // Get results just stored (sorted)
+                            cache.getAllShops(success = {
+                                success(it)
+                            }, error = { })
                         }, error = {
                             error(it)
                         })
@@ -61,15 +66,13 @@ class RepositoryImpl(context: Context): Repository {
 
                 }, errorCompletion = object: ErrorCompletion {
             override fun errorCompletion(errorMessage: String) {
-                // TODO tratamiento del error al parsear una Shop
+                // TODO tratamiento del error al descargar las Shops
             }
-
         })
     }
 
     override fun deleteAllShops(success: () -> Unit,
                                 error: (errorMessage: String) -> Unit) {
-
         cache.deleteAllShops(success, error)
     }
 }

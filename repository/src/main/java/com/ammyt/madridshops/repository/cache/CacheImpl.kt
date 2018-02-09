@@ -6,6 +6,7 @@ import com.ammyt.madridshops.repository.db.buildDBHelper
 import com.ammyt.madridshops.repository.db.dao.ShopDAO
 import com.ammyt.madridshops.repository.model.ShopEntity
 import com.ammyt.madridshops.repository.thread.DispatchOnMainThread
+import com.ammyt.madridshops.repository.utils.dbVersion
 import java.lang.ref.WeakReference
 
 internal class CacheImpl(context: Context): Cache {
@@ -56,7 +57,6 @@ internal class CacheImpl(context: Context): Cache {
     }
 
     private fun cacheDBHelper(): DBHelper {
-        // TODO quizá cambiar "version" por una constante en el build.gradle o una variable global
-        return buildDBHelper(weakContext.get()!!, "MadridShops.sqlite", 1)
+        return buildDBHelper(weakContext.get()!!, "MadridShops.sqlite", dbVersion)
     }
 }
