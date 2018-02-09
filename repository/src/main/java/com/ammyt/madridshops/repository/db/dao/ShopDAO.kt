@@ -36,7 +36,7 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
                 null,
                 "",
                 "",
-                DBConstants.KEY_SHOP_DATABASE_ID)
+                DBConstants.KEY_SHOP_NAME + " ASC")
 
         while (cursor.moveToNext()) {
             val shopEntity = entityFromCursor(cursor)
@@ -75,7 +75,7 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
                 arrayOf(id.toString()),
                 "",
                 "",
-                DBConstants.KEY_SHOP_DATABASE_ID)
+                DBConstants.KEY_SHOP_NAME + " ASC")
 
         return cursor
     }
@@ -86,6 +86,7 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
         // Deberíamos verificar si los datos de entrada son correctos, es decir
         // qué resultado (id) nos devuelve la operación, etc
         id = dbReadWriteConnection.insert(DBConstants.TABLE_SHOP, null, contentValues(element))
+        close()
 
         return id
     }
@@ -132,19 +133,34 @@ internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
     override fun delete(id: Long): Long {
         // Con '?' se evita la inyección de código, pues el ? se resuelve mirando el array
         // Devuelve el número de registros borrados
-        return dbReadWriteConnection.delete(
+
+        val elementsDeleted = dbReadWriteConnection.delete(
                 DBConstants.TABLE_SHOP,
                 DBConstants.KEY_SHOP_DATABASE_ID + " = ?",
                 arrayOf(id.toString())
-                ).toLong()
+        ).toLong()
+
+        close()
+
+        return elementsDeleted
     }
 
     override fun deleteAll(): Boolean {
-        return dbReadWriteConnection.delete(
+
+        val result = dbReadWriteConnection.delete(
                 DBConstants.TABLE_SHOP,
                 null,
                 null
         ).toLong() >= 0 // >= 0 para comprobar el caso en el que la db esté vacía
+
+        close()
+
+        return result
+    }
+
+    private fun close() {
+        dbReadOnlyConnection.close()
+        dbReadWriteConnection.close()
     }
 
 }

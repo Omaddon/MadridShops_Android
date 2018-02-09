@@ -15,6 +15,7 @@ import com.ammyt.domain.interactor.ErrorCompletion
 import com.ammyt.domain.interactor.SuccessCompletion
 import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractor
 import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractorImpl
+import com.ammyt.domain.model.Shop
 import com.ammyt.domain.model.Shops
 import com.ammyt.madridshops.R
 import com.ammyt.madridshops.fragment.ShopsListFragment
@@ -28,11 +29,11 @@ import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_main.*
 
 // TODO ActivitiesActivity
-class ShopActivity : AppCompatActivity() {
+class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
-    private var listFragment: ShopsListFragment? = null
+    //private var listFragment: ShopsListFragment? = null
+    //private var shops: Shops? = null
     private var map: GoogleMap? = null
-    private var shops: Shops? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class ShopActivity : AppCompatActivity() {
         downloadShops()
     }
 
+    // TODO OJO!! NO ordena las tienda si las bajas de internet la primera vez
     private fun downloadShops() {
         val getAllShopsInteractor: GetAllShopsInteractor = GetAllShopsInteractorImpl(this)
         getAllShopsInteractor.execute(object: SuccessCompletion<Shops> {
@@ -148,11 +150,7 @@ class ShopActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
 
-        Router().navigateFromMainActivityToPicassoActivity(this)
         return true
 
         /*
@@ -161,5 +159,14 @@ class ShopActivity : AppCompatActivity() {
             else -> super.onOptionsItemSelected(item)
         }
         */
+    }
+
+    /**
+     * INTERFACES
+     */
+
+    override fun showShopDetail(shop: Shop) {
+        Log.d("SHOP_DETAIL", "💾 " + shop.name)
+        Router().navigateFromShopActivityToShopDetailActivity(this)
     }
 }
