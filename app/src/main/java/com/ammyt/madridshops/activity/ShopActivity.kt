@@ -17,7 +17,7 @@ import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractor
 import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractorImpl
 import com.ammyt.domain.model.Shops
 import com.ammyt.madridshops.R
-import com.ammyt.madridshops.fragment.ListFragment
+import com.ammyt.madridshops.fragment.ShopsListFragment
 import com.ammyt.madridshops.router.Router
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -30,26 +30,32 @@ import kotlinx.android.synthetic.main.activity_main.*
 // TODO ActivitiesActivity
 class ShopActivity : AppCompatActivity() {
 
-    private var listFragment: ListFragment? = null
+    private var listFragment: ShopsListFragment? = null
     private var map: GoogleMap? = null
+    private var shops: Shops? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        setupMap()
-
-        listFragment = supportFragmentManager.findFragmentById(R.id.activity_main_list_fragment) as ListFragment
-
+        downloadShops()
     }
 
-    private fun setupMap() {
+    private fun downloadShops() {
         val getAllShopsInteractor: GetAllShopsInteractor = GetAllShopsInteractorImpl(this)
         getAllShopsInteractor.execute(object: SuccessCompletion<Shops> {
             override fun successCompletion(shops: Shops) {
                 Log.d("Shops", "❗️Count: " + shops.count())
                 //shops.shops.forEach { Log.d("Shop", it.name) }
+
+                val newListFragment = ShopsListFragment.newInstance(shops)
+                //listFragment = supportFragmentManager.findFragmentById(R.id.activity_main_list_fragment) as ShopsListFragment?
+                //listFragment.setShops(shops)
+
+                fragmentManager.beginTransaction()
+                        .add(R.id.activity_main_list_fragment, newListFragment)
+                        .commit()
 
                 initializeMap(shops)
             }
@@ -128,6 +134,7 @@ class ShopActivity : AppCompatActivity() {
         }
     }
 
+    // TODO callouts para los pins del mapa
     private fun appPin(map: GoogleMap, latitude: Double, longitude: Double, title: String) {
         map.addMarker(MarkerOptions()
                 .position(LatLng(latitude,longitude))

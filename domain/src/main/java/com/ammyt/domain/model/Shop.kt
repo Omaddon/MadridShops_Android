@@ -1,5 +1,7 @@
 package com.ammyt.domain.model
 
+import java.io.Serializable
+
 /**
  * Shop: represents one Shop
  */
@@ -25,7 +27,7 @@ data class Shop(
     }
 }
 
-class Shops(val shops: MutableList<Shop>): Aggregate<Shop> {
+class Shops(val shops: MutableList<Shop>): Aggregate<Shop>, Serializable {
     override fun count(): Int {
         return shops.size
     }
