@@ -8,8 +8,6 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import com.ammyt.domain.interactor.ErrorCompletion
@@ -19,6 +17,7 @@ import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractorImpl
 import com.ammyt.domain.model.Shop
 import com.ammyt.domain.model.Shops
 import com.ammyt.madridshops.R
+import com.ammyt.madridshops.adapter.InfoWindowAdapter
 import com.ammyt.madridshops.fragment.ShopsListFragment
 import com.ammyt.madridshops.router.Router
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -80,6 +79,8 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
             it.uiSettings.isZoomControlsEnabled = true
             showUserPosition(baseContext, it)
 
+            it.setInfoWindowAdapter(InfoWindowAdapter(this))
+
             map = it
             addAllPins(shops)
         })
@@ -129,16 +130,23 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
             val shop = shops.get(i)
 
             if (shop.latitude != null && shop.longitude != null) {
-                appPin(map!!, shop.latitude!!, shop.longitude!!, shop.name)
+                addPin(map!!, shop)
+            }
+
+            map?.setOnInfoWindowClickListener {
+                if (it.tag is Shop) {
+                    Router().navigateFromShopActivityToShopDetailActivity(this, it.tag as Shop)
+                }
             }
         }
     }
 
-    // TODO callouts para los pins del mapa
-    private fun appPin(map: GoogleMap, latitude: Double, longitude: Double, title: String) {
+    private fun addPin(map: GoogleMap, shop: Shop) {
         map.addMarker(MarkerOptions()
-                .position(LatLng(latitude,longitude))
-                .title(title))
+                .position(LatLng(shop.latitude!!,shop.longitude!!))
+                .title(shop.name)
+                .snippet(shop.openingHours_es))
+                .tag = shop
     }
 /*
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

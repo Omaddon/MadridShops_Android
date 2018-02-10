@@ -10,7 +10,6 @@ import com.ammyt.domain.model.Shop
 import com.ammyt.domain.model.Shops
 import com.ammyt.madridshops.R
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_picasso.*
 
 class ShopRecyclerViewAdapter(val shopList: Shops?) :
         RecyclerView.Adapter<ShopRecyclerViewAdapter.ShopListViewHolder>() {
