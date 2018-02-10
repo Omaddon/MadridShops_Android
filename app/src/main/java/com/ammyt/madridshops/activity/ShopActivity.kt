@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_main.*
 
 // TODO ActivitiesActivity
+// TODO Mostrar mensaje de error si no hay internet (en el mainView)
 class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
     private var listFragment: ShopsListFragment? = null
@@ -139,7 +140,7 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
                 .position(LatLng(latitude,longitude))
                 .title(title))
     }
-
+/*
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
         menuInflater.inflate(R.menu.menu_main, menu)
@@ -157,6 +158,7 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
         }
         */
     }
+    */
 
     /**
      * INTERFACES
