@@ -32,19 +32,39 @@ class InfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
             view.info_window_hours.text = getOpeningHours(shop)
             val shopImage = view.info_window_image
 
-            // TODO refresh image
             Picasso
                     .with(context)
                     .load(shop.logoURL)
                     .placeholder(R.drawable.no_image)
-                    .into(shopImage)
+                    .into(shopImage, MarkerCallback(m, shop.logoURL, shopImage, context))
         }
 
         return view
-
     }
 
     override fun getInfoWindow(m: Marker): View? {
         return null
     }
+}
+
+class MarkerCallback(val marker: Marker,
+                     val url: String,
+                     val imageView: ImageView,
+                     val context: Context): Callback {
+
+    override fun onSuccess() {
+        if (marker.isInfoWindowShown) {
+            marker.hideInfoWindow()
+
+            Picasso
+                    .with(context)
+                    .load(url)
+                    .placeholder(R.drawable.no_image)
+                    .into(imageView)
+
+            marker.showInfoWindow()
+        }
+    }
+
+    override fun onError() { Log.d("PICASSO", "💩 Error updating pinView image on googleMap.") }
 }
