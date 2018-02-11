@@ -2,6 +2,7 @@ package com.ammyt.madridshops.router
 
 import android.content.Intent
 import com.ammyt.domain.model.Shop
+import com.ammyt.madridshops.activity.MainActivity
 import com.ammyt.madridshops.activity.ShopActivity
 import com.ammyt.madridshops.activity.ShopDetailActivity
 import com.ammyt.madridshops.utils.INTENT_SHOP_DETAIL
@@ -13,5 +14,17 @@ class Router {
         intent.putExtra(INTENT_SHOP_DETAIL, shop)
 
         currentActivity.startActivity(intent)
+    }
+
+    fun navigateFromMainActivityToShopActivity(currentActivity: MainActivity) {
+        val intent = Intent(currentActivity, ShopActivity::class.java)
+
+        currentActivity.startActivity(intent)
+    }
+
+    fun navigateFromMainActivityToActivitiesActivity(currentActivity: MainActivity) {
+        //val intent = Intent(currentActivity, ActivitiesActivity::class.java)
+
+        //currentActivity.startActivity(intent)
     }
 }

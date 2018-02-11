@@ -3,4 +3,7 @@
     <string name="action_settings">Settings</string>
     <string name="shop_image_description">Shop image</string>
     <string name="hello_blank_fragment">TESTING, remember remove this</string>
+    <string name="shops_button_text">SHOPS</string>
+    <string name="activities_button_text">ACTIVITIES</string>
+    <string name="madridshops_title">MADRIDSHOPS</string>
 </resources>

@@ -20,7 +20,6 @@ import kotlinx.android.synthetic.main.info_window_adapter.view.*
 
 class InfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
 
-
     @SuppressLint("InflateParams")
     override fun getInfoContents(m: Marker): View {
         val view = LayoutInflater.from(context).inflate(R.layout.info_window_adapter, null)

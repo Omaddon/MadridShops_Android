@@ -30,7 +30,6 @@ import kotlinx.android.synthetic.main.activity_shop.*
 import kotlinx.android.synthetic.main.content_shop.*
 
 // TODO ActivitiesActivity
-// TODO Mostrar mensaje de error si no hay internet (en el mainView)
 class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
     private var listFragment: ShopsListFragment? = null

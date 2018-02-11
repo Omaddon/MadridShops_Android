@@ -25,6 +25,28 @@ fun getDescription(shop: Shop): String {
     return result
 }
 
+fun getShopButtonText(): String {
+    var result = ""
+
+    when (getLanguage()) {
+        "es" -> result = "TIENDAS"
+        else -> result = "SHOPS"
+    }
+
+    return result
+}
+
+fun getActivitiesButtonText(): String {
+    var result = ""
+
+    when (getLanguage()) {
+        "es" -> result = "ACTIVIDADES"
+        else -> result = "ACTIVITIES"
+    }
+
+    return result
+}
+
 private fun getLanguage(): String {
     return Locale.getDefault().language
 }
