@@ -5,6 +5,8 @@ import android.content.Context
 import android.util.Log
 import com.ammyt.madridshops.repository.cache.Cache
 import com.ammyt.madridshops.repository.cache.CacheImpl
+import com.ammyt.madridshops.repository.model.ActivitiesResponseEntity
+import com.ammyt.madridshops.repository.model.ActivityEntity
 import com.ammyt.madridshops.repository.model.ShopEntity
 import com.ammyt.madridshops.repository.model.ShopsResponseEntity
 import com.ammyt.madridshops.repository.network.GetJsonManager
@@ -33,7 +35,6 @@ class RepositoryImpl(context: Context): Repository {
         })
     }
 
-    // TODO populate cache for Activities
     private fun populateShopCache(success: (shops: List<ShopEntity>) -> Unit,
                                   error: (errorMessage: String) -> Unit) {
 
@@ -75,5 +76,55 @@ class RepositoryImpl(context: Context): Repository {
     override fun deleteAllShops(success: () -> Unit,
                                 error: (errorMessage: String) -> Unit) {
         cache.deleteAllShops(success, error)
+    }
+
+    override fun getAllActivities(success: (activities: List<ActivityEntity>) -> Unit, error: (errorMessage: String) -> Unit) {
+        cache.getAllActivities(success = {
+            success(it)
+        }, error = {
+            populateActivityCache(success, error)
+        })
+    }
+
+    private fun populateActivityCache(success: (activities: List<ActivityEntity>) -> Unit,
+                                  error: (errorMessage: String) -> Unit) {
+
+        // Perform network request
+        val jsonManager: GetJsonManager = GetJsonManagerVolleyImpl(weakContext.get()!!)
+        jsonManager.execute(BuildConfig.MADRIDACTIVITIES_SERVER_URL,
+                successCompletion = object: SuccessCompletion<String> {
+                    override fun successCompletion(e: String) {
+                        // e = our JSON
+                        // parsing: be care with parse errors!!
+                        val parser = JsonEntitiesParser()
+                        val responseEntity: ActivitiesResponseEntity
+
+                        try {
+                            responseEntity = parser.parse<ActivitiesResponseEntity>(e)
+                        } catch (e: InvalidFormatException) {
+                            error("💩 Error parsing.")
+                            return
+                        }
+
+                        // Store result in cache
+                        cache.saveAllActivities(responseEntity.result, success = {
+                            // Get results just stored (sorted)
+                            cache.getAllActivities(success = {
+                                success(it)
+                            }, error = { })
+                        }, error = {
+                            error(it)
+                        })
+                    }
+
+                }, errorCompletion = object: ErrorCompletion {
+            override fun errorCompletion(errorMessage: String) {
+                Log.d("Volley", "💩 Error downloading JSON. Volley fails!")
+            }
+        })
+    }
+
+    override fun deleteAllActivities(success: () -> Unit, error: (errorMessage: String) -> Unit) {
+        cache.deleteAllActivities(success, error)
     }
 }

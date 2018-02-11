@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties
 import com.fasterxml.jackson.annotation.JsonProperty
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-data class ShopEntity (
+data class ActivityEntity (
         val id: Long,
         val databaseId: Long,
         val name: String,

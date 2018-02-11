@@ -3,7 +3,9 @@ package com.ammyt.madridshops.repository.cache
 import android.content.Context
 import com.ammyt.madridshops.repository.db.DBHelper
 import com.ammyt.madridshops.repository.db.buildDBHelper
+import com.ammyt.madridshops.repository.db.dao.ActivityDAO
 import com.ammyt.madridshops.repository.db.dao.ShopDAO
+import com.ammyt.madridshops.repository.model.ActivityEntity
 import com.ammyt.madridshops.repository.model.ShopEntity
 import com.ammyt.madridshops.repository.thread.DispatchOnMainThread
 import com.ammyt.madridshops.repository.utils.dbVersion
@@ -51,6 +53,50 @@ internal class CacheImpl(context: Context): Cache {
                     success()
                 } else {
                     error("💩 Error deleting all shops from cache.")
+                }
+            })
+        }).run()
+    }
+
+    override fun getAllActivities(success: (activities: List<ActivityEntity>) -> Unit, error: (errorMessage: String) -> Unit) {
+        Thread(Runnable {
+            val activities = ActivityDAO(cacheDBHelper()).query()
+
+            DispatchOnMainThread(Runnable {
+                if (activities.count() > 0) {
+                    success(activities)
+                } else {
+                    error("💩 Error getting all activities from cache. No activities")
+                }
+            })
+        }).run()
+    }
+
+    override fun saveAllActivities(activities: List<ActivityEntity>, success: () -> Unit, error: (errorMessage: String) -> Unit) {
+        Thread(Runnable {
+            try {
+                activities.forEach { ActivityDAO(cacheDBHelper()).insert(it) }
+
+                DispatchOnMainThread(Runnable {
+                    success()
+                })
+            } catch (e: Exception) {
+                DispatchOnMainThread(Runnable {
+                    error("💩 Error saving all activities into db.")
+                })
+            }
+        }).run()
+    }
+
+    override fun deleteAllActivities(success: () -> Unit, error: (errorMessage: String) -> Unit) {
+        Thread(Runnable {
+            val successDeleting = ActivityDAO(cacheDBHelper()).deleteAll()
+
+            DispatchOnMainThread(Runnable {
+                if (successDeleting) {
+                    success()
+                } else {
+                    error("💩 Error deleting all activities from cache.")
                 }
             })
         }).run()

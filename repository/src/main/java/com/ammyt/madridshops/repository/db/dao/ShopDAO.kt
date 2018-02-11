@@ -7,7 +7,6 @@ import android.content.ContentValues
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 
-// TODO ActivitiesDAO
 internal class ShopDAO(val dbHelper: DBHelper): DAOPersistable<ShopEntity> {
 
     private val dbReadOnlyConnection: SQLiteDatabase = dbHelper.readableDatabase

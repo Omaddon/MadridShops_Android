@@ -2,11 +2,7 @@ package com.ammyt.domain.model
 
 import java.io.Serializable
 
-/**
- * Shop: represents one Shop
- */
-
-data class Shop(
+data class Activity(
         val id: Int,
         val name: String,
         val description_en: String,
@@ -22,33 +18,33 @@ data class Shop(
         val url: String): Serializable {
 
     init {
-        Shops(ArrayList<Shop>())
+        Activities(ArrayList<Activity>())
     }
 }
 
-class Shops(val shops: MutableList<Shop>): Aggregate<Shop> {
+class Activities(val activities: MutableList<Activity>): Aggregate<Activity> {
     override fun count(): Int {
-        return shops.size
+        return activities.size
     }
 
-    override fun all(): List<Shop> {
-        return shops
+    override fun all(): List<Activity> {
+        return activities
     }
 
-    override fun add(element: Shop) {
-        shops.add(element)
+    override fun add(element: Activity) {
+        activities.add(element)
     }
 
     override fun delete(position: Int) {
-        shops.removeAt(position)
+        activities.removeAt(position)
     }
 
-    override fun delete(element: Shop) {
-        shops.remove(element)
+    override fun delete(element: Activity) {
+        activities.remove(element)
     }
 
-    override fun get(position: Int): Shop {
-        return shops.get(position)
+    override fun get(position: Int): Activity {
+        return activities.get(position)
     }
 
 }
