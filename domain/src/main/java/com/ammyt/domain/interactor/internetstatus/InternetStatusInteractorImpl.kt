@@ -1,19 +1,18 @@
 package com.ammyt.domain.interactor.internetstatus
 
+import android.content.Context
+import android.net.ConnectivityManager
 import com.ammyt.domain.BuildConfig
 import com.ammyt.domain.interactor.CodeClosure
 import com.ammyt.domain.interactor.ErrorClosure
-import java.net.InetAddress
+import com.ammyt.madridshops.repository.thread.DispatchOnMainThread
+import java.io.IOException
+import java.net.HttpURLConnection
+import java.net.URL
 
+// TODO implementar internetStatus
 class InternetStatusInteractorImpl : InternetStatusInteractor {
-    override fun execute(success: CodeClosure, error: ErrorClosure) {
-        val shopAddress: InetAddress = InetAddress.getByName(BuildConfig.MADRIDSHOPS_SERVER_URL)
-        val activitiesAddress: InetAddress = InetAddress.getByName(BuildConfig.MADRIDACTIVITIES_SERVER_URL)
-
-        if (shopAddress.isReachable(3000) && activitiesAddress.isReachable(3000)) {
-            success()
-        } else {
-            error("Conexion Error. Unable connect to server.")
-        }
+    override fun execute(context: Context, success: CodeClosure, error: ErrorClosure) {
+        success()
     }
 }

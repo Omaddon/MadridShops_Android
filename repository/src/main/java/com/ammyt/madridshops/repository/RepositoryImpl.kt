@@ -2,6 +2,7 @@ package com.ammyt.madridshops.repository
 
 import ammyt.com.repository.BuildConfig
 import android.content.Context
+import android.util.Log
 import com.ammyt.madridshops.repository.cache.Cache
 import com.ammyt.madridshops.repository.cache.CacheImpl
 import com.ammyt.madridshops.repository.model.ShopEntity
@@ -66,7 +67,7 @@ class RepositoryImpl(context: Context): Repository {
 
                 }, errorCompletion = object: ErrorCompletion {
             override fun errorCompletion(errorMessage: String) {
-                // TODO tratamiento del error al descargar las Shops
+                Log.d("Volley", "💩 Error downloading JSON. Volley fails!")
             }
         })
     }

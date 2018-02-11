@@ -2,6 +2,7 @@ package com.ammyt.madridshops.activity
 
 import android.Manifest.permission.ACCESS_COARSE_LOCATION
 import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.app.AlertDialog
 import android.content.Context
 import android.content.pm.PackageManager
 import android.os.Bundle
@@ -9,7 +10,6 @@ import android.support.v4.app.ActivityCompat
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import com.ammyt.domain.interactor.ErrorCompletion
 import com.ammyt.domain.interactor.SuccessCompletion
 import com.ammyt.domain.interactor.getallshops.GetAllShopsInteractor
@@ -61,7 +61,18 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
         }, object: ErrorCompletion {
             override fun errorCompletion(errorMessage: String) {
                 shop_list_progress_bar.visibility = View.INVISIBLE
-                Toast.makeText(baseContext, "Error loading.", Toast.LENGTH_SHORT).show()
+
+                AlertDialog.Builder(this@ShopActivity)
+                        .setTitle("Error")
+                        .setMessage("Conexion Error. Unable connect to server.")
+                        .setPositiveButton("Retry?", { dialog, which ->
+                            dialog.dismiss()
+                            downloadShops()
+                        })
+                        .setNegativeButton("Exit", { dialog, which ->
+                            finish()
+                        })
+                        .show()
             }
         })
     }
