@@ -31,11 +31,11 @@ class ShopDetailActivity : AppCompatActivity() {
                 .placeholder(R.drawable.no_image)
                 .into(shop_image)
 
-        val googleMap_url = GOOGLE_MAP_URL + shop.latitude + "," + shop.longitude
+        val googleMapUrl = GOOGLE_MAP_URL + shop.latitude + "," + shop.longitude
 
         Picasso
                 .with(this)
-                .load(googleMap_url)
+                .load(googleMapUrl)
                 .placeholder(R.drawable.no_image)
                 .into(shop_google_map)
     }

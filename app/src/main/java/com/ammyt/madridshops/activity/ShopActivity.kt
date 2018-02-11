@@ -26,8 +26,8 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.content_main.*
+import kotlinx.android.synthetic.main.activity_shop.*
+import kotlinx.android.synthetic.main.content_shop.*
 
 // TODO ActivitiesActivity
 // TODO Mostrar mensaje de error si no hay internet (en el mainView)
@@ -38,7 +38,7 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_shop)
         setSupportActionBar(toolbar)
 
         downloadShops()

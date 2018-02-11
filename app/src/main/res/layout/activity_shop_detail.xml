@@ -67,10 +67,12 @@
             android:layout_marginEnd="@dimen/margin_default_detail"
             android:layout_marginStart="@dimen/margin_default_detail"
             android:layout_marginTop="@dimen/margin_default_detail"
+            android:layout_marginBottom="@dimen/margin_default_detail"
             android:textSize="@dimen/text_size_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/shop_address"
+            app:layout_constraintBottom_toTopOf="@+id/shop_google_map"
             tools:text="monday, tuesday and all days in the year from -1:00h to 26:00h"/>
 
         <ImageView
@@ -78,10 +80,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            android:layout_marginBottom="@dimen/margin_default_detail"
-            android:layout_marginEnd="@dimen/margin_default_detail"
-            android:layout_marginStart="@dimen/margin_default_detail"
-            android:layout_marginTop="@dimen/margin_default_detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
