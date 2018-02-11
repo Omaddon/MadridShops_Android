@@ -9,6 +9,7 @@ import android.widget.TextView
 import com.ammyt.domain.model.Shop
 import com.ammyt.domain.model.Shops
 import com.ammyt.madridshops.R
+import com.ammyt.madridshops.utils.getOpeningHours
 import com.squareup.picasso.Picasso
 
 class ShopRecyclerViewAdapter(val shopList: Shops?) :
@@ -55,8 +56,7 @@ class ShopRecyclerViewAdapter(val shopList: Shops?) :
                     .placeholder(R.drawable.no_image)
                     .into(shopImage)
 
-            // TODO mostar formato hora en función idioma
-            shopHours.text = shop.openingHours_es
+            shopHours.text = getOpeningHours(shop)
         }
     }
 }

@@ -4,9 +4,13 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import com.ammyt.domain.model.Shop
 import com.ammyt.madridshops.R
+import com.ammyt.madridshops.utils.GOOGLE_MAP_URL
 import com.ammyt.madridshops.utils.INTENT_SHOP_DETAIL
+import com.ammyt.madridshops.utils.getDescription
+import com.ammyt.madridshops.utils.getOpeningHours
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_shop_detail.*
+import java.util.*
 
 class ShopDetailActivity : AppCompatActivity() {
 
@@ -16,11 +20,10 @@ class ShopDetailActivity : AppCompatActivity() {
 
         val shop = intent.getSerializableExtra(INTENT_SHOP_DETAIL) as Shop
 
-        // TODO comprobar idioma a mostrar
         shop_name.text =  shop.name
-        shop_description.text = shop.description_es
+        shop_description.text = getDescription(shop)
         shop_address.text = shop.address
-        shop_hours.text = shop.openingHours_es
+        shop_hours.text = getOpeningHours(shop)
 
         Picasso
                 .with(this)
@@ -28,8 +31,7 @@ class ShopDetailActivity : AppCompatActivity() {
                 .placeholder(R.drawable.no_image)
                 .into(shop_image)
 
-        val googleMap_url =
-                "https://maps.googleapis.com/maps/api/staticmap?%25&size=320x220&scale=2&markers=" + shop.latitude + "," + shop.longitude
+        val googleMap_url = GOOGLE_MAP_URL + shop.latitude + "," + shop.longitude
 
         Picasso
                 .with(this)

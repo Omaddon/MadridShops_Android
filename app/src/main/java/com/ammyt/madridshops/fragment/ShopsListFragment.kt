@@ -35,6 +35,9 @@ class ShopsListFragment : Fragment() {
             shopRecyclerView = root.findViewById(R.id.shops_recycler_view) as RecyclerView
             shopRecyclerView.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.recycler_columns))
             shopRecyclerView.itemAnimator = DefaultItemAnimator()
+
+            adapter = ShopRecyclerViewAdapter(shops)
+            shopRecyclerView.adapter = adapter
         }
 
         return root

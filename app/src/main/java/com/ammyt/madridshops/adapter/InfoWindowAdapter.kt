@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.ImageView
 import com.ammyt.domain.model.Shop
 import com.ammyt.madridshops.R
+import com.ammyt.madridshops.utils.getOpeningHours
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.Marker
 import com.squareup.picasso.Callback
@@ -28,7 +29,7 @@ class InfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
             val shop = m.tag as Shop
 
             view.info_window_name.text = shop.name
-            view.info_window_hours.text = shop.openingHours_es
+            view.info_window_hours.text = getOpeningHours(shop)
             val shopImage = view.info_window_image
 
             // TODO refresh image
