@@ -1,50 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_padding"
+    android:paddingRight="@dimen/activity_horizontal_padding"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.ammyt.madridshops.activity.ShopActivity"
+    tools:showIn="@layout/activity_shop">
 
-    <TextView
-        android:id="@+id/shop_name"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/margin_small"
-        android:layout_marginStart="@dimen/margin_small"
-        android:gravity="start|center_vertical"
-        app:layout_constraintBottom_toBottomOf="@+id/shop_logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/shop_logo"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Dish with a very long name"/>
+    <fragment
+        android:id="@+id/activity_main_map_fragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_map_height"
+        android:background="@color/colorPrimary"/>
 
-    <ImageView
-        android:id="@+id/shop_logo"
-        android:layout_width="@dimen/shop_list_image_size"
-        android:layout_height="@dimen/shop_list_image_size"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:layout_marginStart="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_small"
-        android:contentDescription="@string/shop_image_description"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@mipmap/ic_launcher_round"/>
+    <fragment
+        android:id="@+id/activity_main_list_fragment"
+        android:name="com.ammyt.madridshops.fragment.ShopsListFragment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/activity_list_height"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/activity_main_map_fragment"
+        android:background="@color/colorAccent"/>
 
-    <TextView
-        android:id="@+id/shop_hours"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/margin_small"
-        android:layout_marginEnd="@dimen/margin_small"
-        android:layout_marginTop="@dimen/margin_min"
-        android:textSize="@dimen/text_size_small"
-        android:textStyle="italic"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/shop_name"
-        app:layout_constraintTop_toBottomOf="@+id/shop_name"
-        tools:text="Monday to saturdat 10:00h - 21:00h"/>
+    <ProgressBar
+        android:id="@+id/shop_list_progress_bar"
+        android:layout_centerInParent="true"
+        android:visibility="invisible"
+        android:layout_width="@dimen/progress_bar_width"
+        android:layout_height="@dimen/progress_bar_height"/>
 
-</android.support.constraint.ConstraintLayout>
+</RelativeLayout>

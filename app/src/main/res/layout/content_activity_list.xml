@@ -10,27 +10,27 @@
     android:paddingRight="@dimen/activity_horizontal_padding"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ammyt.madridshops.activity.ShopActivity"
-    tools:showIn="@layout/activity_shop">
+    tools:context="com.ammyt.madridshops.activity.ActivitiesActivity"
+    tools:showIn="@layout/activity_activities">
 
     <fragment
-        android:id="@+id/activity_main_map_fragment"
+        android:id="@+id/activity_main_map_fragment_activities"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_map_height"
         android:background="@color/colorPrimary"/>
 
     <fragment
-        android:id="@+id/activity_main_list_fragment"
-        android:name="com.ammyt.madridshops.fragment.ShopsListFragment"
+        android:id="@+id/activity_main_list_fragment_activities"
+        android:name="com.ammyt.madridshops.fragment.ActivitiesListFragment"
         android:layout_width="match_parent"
         android:layout_height="@dimen/activity_list_height"
         android:layout_alignParentBottom="true"
-        android:layout_below="@id/activity_main_map_fragment"
+        android:layout_below="@id/activity_main_map_fragment_activities"
         android:background="@color/colorAccent"/>
 
     <ProgressBar
-        android:id="@+id/shop_list_progress_bar"
+        android:id="@+id/activity_list_progress_bar"
         android:layout_centerInParent="true"
         android:visibility="invisible"
         android:layout_width="@dimen/progress_bar_width"

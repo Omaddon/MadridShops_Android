@@ -1,5 +1,6 @@
 package com.ammyt.madridshops.utils
 
+import com.ammyt.domain.model.Activity
 import com.ammyt.domain.model.Shop
 import java.util.*
 
@@ -14,12 +15,34 @@ fun getOpeningHours(shop: Shop): String {
     return result
 }
 
+fun getOpeningHours(activity: Activity): String {
+    var result = ""
+
+    when (getLanguage()) {
+        "es" -> result = activity.openingHours_es
+        else -> result = activity.openingHours_en
+    }
+
+    return result
+}
+
 fun getDescription(shop: Shop): String {
     var result = ""
 
     when (getLanguage()) {
         "es" -> result = shop.description_es
         else -> result = shop.description_en
+    }
+
+    return result
+}
+
+fun getDescription(activity: Activity): String {
+    var result = ""
+
+    when (getLanguage()) {
+        "es" -> result = activity.description_es
+        else -> result = activity.description_en
     }
 
     return result

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
+import com.ammyt.domain.model.Activity
 import com.ammyt.domain.model.Shop
 import com.ammyt.madridshops.R
 import com.ammyt.madridshops.utils.getOpeningHours
@@ -36,6 +37,19 @@ class InfoWindowAdapter(val context: Context) : GoogleMap.InfoWindowAdapter {
                     .load(shop.logoURL)
                     .placeholder(R.drawable.no_image)
                     .into(shopImage, MarkerCallback(m, shop.logoURL, shopImage, context))
+
+        } else if (m.tag is Activity) {
+            val activity = m.tag as Activity
+
+            view.info_window_name.text = activity.name
+            view.info_window_hours.text = getOpeningHours(activity)
+            val activityImage = view.info_window_image
+
+            Picasso
+                    .with(context)
+                    .load(activity.logoURL)
+                    .placeholder(R.drawable.no_image)
+                    .into(activityImage, MarkerCallback(m, activity.logoURL, activityImage, context))
         }
 
         return view

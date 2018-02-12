@@ -31,7 +31,7 @@ class ShopRecyclerViewAdapter(val shopList: Shops?) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ShopListViewHolder {
-        val view = LayoutInflater.from(parent?.context).inflate(R.layout.content_shop_list, parent, false)
+        val view = LayoutInflater.from(parent?.context).inflate(R.layout.content_item_list, parent, false)
         view.setOnClickListener(onClickListener)
 
         return ShopListViewHolder(view)
@@ -40,9 +40,9 @@ class ShopRecyclerViewAdapter(val shopList: Shops?) :
 
     inner class ShopListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val shopImage = itemView.findViewById<ImageView>(R.id.shop_logo)
-        val shopName = itemView.findViewById<TextView>(R.id.shop_name)
-        val shopHours = itemView.findViewById<TextView>(R.id.shop_hours)
+        val shopImage = itemView.findViewById<ImageView>(R.id.item_logo)
+        val shopName = itemView.findViewById<TextView>(R.id.item_name)
+        val shopHours = itemView.findViewById<TextView>(R.id.item_hours)
 
         fun bindShop(shop: Shop) {
             shopName.text = shop.name

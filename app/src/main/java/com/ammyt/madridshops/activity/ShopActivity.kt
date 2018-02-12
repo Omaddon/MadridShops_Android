@@ -27,9 +27,8 @@ import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.android.synthetic.main.activity_shop.*
-import kotlinx.android.synthetic.main.content_shop.*
+import kotlinx.android.synthetic.main.content_shop_list.*
 
-// TODO ActivitiesActivity
 class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
     private var listFragment: ShopsListFragment? = null
@@ -153,7 +152,7 @@ class ShopActivity : AppCompatActivity(), ShopsListFragment.OnShowShopDetail {
 
     private fun addPin(map: GoogleMap, shop: Shop) {
         map.addMarker(MarkerOptions()
-                .position(LatLng(shop.latitude!!,shop.longitude!!))
+                .position(LatLng(shop.latitude!!, shop.longitude!!))
                 .title(shop.name)
                 .snippet(shop.openingHours_es))
                 .tag = shop

@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.ammyt.domain.model.Shop
 import com.ammyt.domain.model.Shops
-
 import com.ammyt.madridshops.R
 import com.ammyt.madridshops.adapter.ShopRecyclerViewAdapter
 
@@ -32,7 +31,7 @@ class ShopsListFragment : Fragment() {
         inflater?.let {
             root = it.inflate(R.layout.fragment_list, container, false)
 
-            shopRecyclerView = root.findViewById(R.id.shops_recycler_view) as RecyclerView
+            shopRecyclerView = root.findViewById(R.id.recycler_view) as RecyclerView
             shopRecyclerView.layoutManager = GridLayoutManager(activity, resources.getInteger(R.integer.recycler_columns))
             shopRecyclerView.itemAnimator = DefaultItemAnimator()
 

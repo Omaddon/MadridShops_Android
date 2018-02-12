@@ -10,7 +10,6 @@ import com.ammyt.madridshops.utils.getDescription
 import com.ammyt.madridshops.utils.getOpeningHours
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_shop_detail.*
-import java.util.*
 
 class ShopDetailActivity : AppCompatActivity() {
 
@@ -20,10 +19,10 @@ class ShopDetailActivity : AppCompatActivity() {
 
         val shop = intent.getSerializableExtra(INTENT_SHOP_DETAIL) as Shop
 
-        shop_name.text =  shop.name
+        item_name.text =  shop.name
         shop_description.text = getDescription(shop)
         shop_address.text = shop.address
-        shop_hours.text = getOpeningHours(shop)
+        item_hours.text = getOpeningHours(shop)
 
         Picasso
                 .with(this)
