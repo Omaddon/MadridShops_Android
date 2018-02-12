@@ -5,7 +5,6 @@ import android.net.ConnectivityManager
 import com.ammyt.domain.interactor.CodeClosure
 import com.ammyt.domain.interactor.ErrorClosure
 
-// TODO implementar internetStatus
 class InternetStatusInteractorImpl : InternetStatusInteractor {
     override fun execute(context: Context, success: CodeClosure, error: ErrorClosure) {
         val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager

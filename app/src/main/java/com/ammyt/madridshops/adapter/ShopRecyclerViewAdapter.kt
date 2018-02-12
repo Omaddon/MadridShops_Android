@@ -47,8 +47,8 @@ class ShopRecyclerViewAdapter(val shopList: Shops?) :
         fun bindShop(shop: Shop) {
             shopName.text = shop.name
 
-            Picasso.with(itemView.context).setIndicatorsEnabled(true)
-            Picasso.with(itemView.context).isLoggingEnabled = true
+            //Picasso.with(itemView.context).setIndicatorsEnabled(true)
+            //Picasso.with(itemView.context).isLoggingEnabled = true
 
             Picasso
                     .with(itemView.context)

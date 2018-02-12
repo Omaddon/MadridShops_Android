@@ -1,6 +1,8 @@
 package com.ammyt.madridshops.activity
 
 import android.app.AlertDialog
+import android.content.Context
+import android.net.ConnectivityManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -18,11 +20,12 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        disableButtons()
         checkInternetStatus()
     }
 
     private fun checkInternetStatus() {
+        disableButtons()
+
         InternetStatusInteractorImpl().execute(this, success = {
 
             enableButtons()

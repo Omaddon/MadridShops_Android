@@ -48,8 +48,8 @@ class ActivityRecyclerViewAdapter(val activityList: Activities?):
         fun bindActivity(activity: Activity) {
             activityName.text = activity.name
 
-            Picasso.with(itemView.context).setIndicatorsEnabled(true)
-            Picasso.with(itemView.context).isLoggingEnabled = true
+            //Picasso.with(itemView.context).setIndicatorsEnabled(true)
+            //Picasso.with(itemView.context).isLoggingEnabled = true
 
             Picasso
                     .with(itemView.context)
